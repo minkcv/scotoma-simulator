@@ -27,6 +27,7 @@
         ctx.font = '14pt arial, sans-serif'
         var px = 220;
         var py = 400;
+        var flash = 150;
         var movespeed = 2;
         var wordlist = [
             "surprise billing disclosure",
@@ -50,7 +51,6 @@
             "community reintegration",
             "multiple facial fractures",
             "intensive care unit"
-
         ];
         var words = [];
         addEventListener('mousemove', function(e) {
@@ -75,10 +75,13 @@
             var sy = py - 10;
             for (var i = 0; i < 44; i++) {
                 ctx.beginPath();
-                ctx.strokeStyle = "rgb(" + 0 + "," + i / 4 + 1 + "," + i / 2 + 12 + ")";
+                ctx.strokeStyle = "rgb(" + flash + "," + i + flash + "," + i + 2 + flash + ")";
                 ctx.ellipse(sx, sy, i, i * 2/5, 0, 0, 2 * Math.PI);
                 ctx.stroke();
             }
+            flash+=3;
+            if (flash > 250)
+                flash = 150;
             requestAnimationFrame(update);
         }
         function addWord() {
@@ -87,7 +90,7 @@
             w.text = s;
             w.x = Math.floor(Math.random() * (width - 200));
             w.y = Math.floor(Math.random() * (height - 50));
-            w.duration = Math.floor(Math.random() * 600) + 1000;
+            w.duration = Math.floor(Math.random() * 600) + 2000;
             words.push(w);
             setTimeout(addWord, Math.floor(Math.random() * 6000));
         }
