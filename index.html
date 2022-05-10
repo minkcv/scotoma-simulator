@@ -62,7 +62,7 @@
             ctx.strokeStyle = '#000000';
             for (var i = 0; i < words.length; i++) {
                 var w = words[i];
-                ctx.strokeText(w.text, w.x, w.y);
+                ctx.fillText(w.text, w.x, w.y);
                 w.duration--;
             }
             for (var i = 0; i < words.length; i++) {
