@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Scotoma Simulator</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            cursor: text
+        }
+    </style>
+</head>
+<body>
+    <canvas id="c" style="border: 1px solid black"></canvas>
+    Only look at the mouse. Move the mouse where you look.
+    <script type="text/javascript">
+        var width = document.body.clientWidth - 5;
+        var height = document.body.clientHeight - 40;
+        var c = document.getElementById('c');
+        c.width = width;
+        c.height = height;
+        var ctx = c.getContext('2d');
+        ctx.font = '14pt arial, sans-serif'
+        var px = 220;
+        var py = 400;
+        var movespeed = 2;
+        var wordlist = [
+            "surprise billing disclosure",
+            "medical consent form",
+            "out of pocket maximum",
+            "victim impact statement",
+            "driving under the influence",
+            "multiple controlled substances",
+            "deep peroneal nerve",
+            "prelimenary hearing",
+            "automobile v pedestrian",
+            "out of network provider",
+            "subrogation claim",
+            "December 2nd, 2021 at 11:33 am",
+            "summary of benefits and coverage",
+            "explanation of benefits",
+            "ped is currently cons",
+            "severe bleeding from head",
+            "traumatic brain injury",
+            "brachial plexus",
+            "community reintegration",
+            "multiple facial fractures",
+            "intensive care unit"
+
+        ];
+        var words = [];
+        addEventListener('mousemove', function(e) {
+            px = e.offsetX;
+            py = e.offsetY;
+        });
+        function update() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = '#000000';
+            for (var i = 0; i < words.length; i++) {
+                var w = words[i];
+                ctx.strokeText(w.text, w.x, w.y);
+                w.duration--;
+            }
+            for (var i = 0; i < words.length; i++) {
+                if (words[i].duration < 0) {
+                    words.splice(i, 1);
+                    i--;
+                }
+            }
+            var sx = px + 65;
+            var sy = py - 10;
+            for (var i = 0; i < 44; i++) {
+                ctx.beginPath();
+                ctx.strokeStyle = "rgb(" + 0 + "," + i / 4 + 1 + "," + i / 2 + 12 + ")";
+                ctx.ellipse(sx, sy, i, i * 2/5, 0, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            requestAnimationFrame(update);
+        }
+        function addWord() {
+            var s = wordlist[Math.floor(Math.random() * wordlist.length)]
+            var w = {};
+            w.text = s;
+            w.x = Math.floor(Math.random() * (width - 200));
+            w.y = Math.floor(Math.random() * (height - 50));
+            w.duration = Math.floor(Math.random() * 600) + 1000;
+            words.push(w);
+            setTimeout(addWord, Math.floor(Math.random() * 6000));
+        }
+        setTimeout(addWord, Math.floor(Math.random() * 1200));
+        update();
+    </script>
+</body>
+</html>
